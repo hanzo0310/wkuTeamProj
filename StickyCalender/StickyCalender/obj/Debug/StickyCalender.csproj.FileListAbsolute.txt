@@ -1,0 +1,10 @@
+C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\bin\Debug\StickyCalender.exe.config
+C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\bin\Debug\StickyCalender.exe
+C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\bin\Debug\StickyCalender.pdb
+C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\obj\Debug\StickyCalender.csproj.AssemblyReference.cache
+C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\obj\Debug\StickyCalender.Properties.Resources.resources
+C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\obj\Debug\StickyCalender.csproj.GenerateResource.cache
+C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\obj\Debug\StickyCalender.csproj.CoreCompileInputs.cache
+C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\obj\Debug\StickyCalender.exe
+C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\obj\Debug\StickyCalender.pdb
+C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\obj\Debug\StickyCalender.main.resources
