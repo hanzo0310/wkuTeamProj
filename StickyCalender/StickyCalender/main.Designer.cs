@@ -1341,6 +1341,7 @@
             this.trashButton.Size = new System.Drawing.Size(40, 25);
             this.trashButton.TabIndex = 0;
             this.trashButton.UseVisualStyleBackColor = true;
+            this.trashButton.Click += new System.EventHandler(this.trashButton_Click);
             // 
             // trashCanArea
             // 
@@ -1564,6 +1565,7 @@
             this.DateRightShift.TabIndex = 3;
             this.DateRightShift.Text = ">";
             this.DateRightShift.UseVisualStyleBackColor = true;
+            this.DateRightShift.Click += new System.EventHandler(this.MonthButtonClicked);
             // 
             // Calender_Date
             // 
@@ -1586,6 +1588,7 @@
             this.DateLeftShift.TabIndex = 4;
             this.DateLeftShift.Text = "<";
             this.DateLeftShift.UseVisualStyleBackColor = true;
+            this.DateLeftShift.Click += new System.EventHandler(this.MonthButtonClicked);
             // 
             // Calender_DateArea
             // 

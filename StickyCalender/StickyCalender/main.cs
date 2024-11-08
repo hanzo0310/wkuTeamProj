@@ -10,24 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 
-
-/*for (int i = 1; i <= 42; i++)
-            {
-                // 각 ListBox의 이름을 동적으로 설정
-                string listBoxName = $"DateBox{i}";
-
-                // calenderArea GroupBox에서 해당 이름의 ListBox를 찾음
-                ListBox listBox = calenderArea.Controls.Find(listBoxName, true).FirstOrDefault() as ListBox;
-
-                if (listBox != null)
-                {
-                    // 원하는 작업 수행
-                    listBox.Items.Add("Some data");
-                }
-            }*/
-
 /*
- 
 프로그램 작성 가이드라인
 
 1. 데이터 파일 작성 형식
@@ -50,7 +33,7 @@ namespace StickyCalender
     {
 
         private bool isChanging = false;
-        static int Syear, Smonth;
+        static int Syear, Smonth, Sday;
 
 
         //----------------------------------< 공 용 함 수 >----------------------------------
@@ -140,16 +123,15 @@ namespace StickyCalender
                         }
 
                         File.Move(from, to);
-                        //MessageBox.Show($"파일 '{fileName}'이(가) trash 폴더로 이동되었습니다.");
                     }
                     catch (Exception ex)
                     {
-                        //MessageBox.Show($"파일 이동 중 오류가 발생했습니다. 오류: {ex.Message}");
+                        MessageBox.Show($"파일 이동 중 오류가 발생했습니다. 오류: {ex.Message}");
                     }
                 }
                 else
                 {
-                    //MessageBox.Show($"파일 '{fileName}'을(를) 찾을 수 없습니다.");
+                    MessageBox.Show($"파일 '{fileName}'을(를) 찾을 수 없습니다.");
                 }
             }
             else if (fromto == 0) // 휴지통에서 복구
@@ -260,7 +242,7 @@ namespace StickyCalender
             return 0;
         }
 
-        private void writeDateBox(int kind, int target, string newText)
+        private void writeDateBox(int kind, int target, string newText = "")
         {
             if (kind == 0)  // 라디오버튼 텍스트 수정
             {
@@ -296,9 +278,7 @@ namespace StickyCalender
 
                     if (dateData != null)
                     {
-                        // 줄바꿈을 포함한 텍스트를 그대로 추가
-                        // 만약 데이터를 여러 줄로 구분해야 한다면 \r\n을 사용하여 구분
-                        // 예시: newText에서 줄바꿈이 있을 경우 그대로 삽입
+
                         string formattedText = newText.Replace("\n", "\r\n");
                         dateData.Items.Add(formattedText);
                     }
@@ -312,10 +292,50 @@ namespace StickyCalender
                     MessageBox.Show($"dateBox{target} 그룹박스를 찾을 수 없습니다.");
                 }
             }
+            else if (kind == 2)  // 라디오버튼 비활성화 그리고 내용 삭제
+            {
+                GroupBox dateBox = calenderArea.Controls[$"dateBox{target}"] as GroupBox;
+
+                if (dateBox != null)
+                {
+                    RadioButton dateRadioButton = dateBox.Controls[$"dateButton{target}"] as RadioButton;
+
+                    if (dateRadioButton != null)
+                    {
+                        dateRadioButton.Text = "";
+                        dateRadioButton.Enabled = false;
+                        
+                    }
+                    else
+                    {
+                        MessageBox.Show($"dateButton{target} 라디오버튼을 찾을 수 없습니다.");
+                    }
+
+                    ListBox dateData = dateBox.Controls[$"dateData{target}"] as ListBox;
+
+                    if (dateData != null)
+                    {
+                        dateData.Items.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show($"dateData{target} 리스트박스를 찾을 수 없습니다.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"dateBox{target} 그룹박스를 찾을 수 없습니다.");
+                }
+            }
         }
+
 
         private void InsertDataIntoListBox(int target, string data)
         {
+            /*
+             * 함수 내용 :
+             * 리스트 삽입에 알맞도록 불러온 데이터를 변환하고 삽입하는 함수.
+             */
             GroupBox dateBox = calenderArea.Controls[$"dateBox{target}"] as GroupBox;
             if (dateBox != null)
             {
@@ -323,12 +343,11 @@ namespace StickyCalender
 
                 if (dateData != null)
                 {
-                    // 줄바꿈을 기준으로 데이터를 나누어 각 줄을 ListBox에 추가
                     string[] dataLines = data.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
                     foreach (string line in dataLines)
                     {
-                        dateData.Items.Add(line); // 각 줄을 ListBox에 추가
+                        dateData.Items.Add(line);
                     }
                 }
                 else
@@ -344,9 +363,13 @@ namespace StickyCalender
 
         private void changeRadioChecked(int target, bool tf)
         {
-            if (isChanging) return; // 이미 상태가 변경 중이면 함수를 종료
+            /*
+             * 함수 내용 :
+             * 라디오 버튼을 특정하여 해당 라디오 버튼의 선택여부를 임의로 조정하는 함수.
+             */
+            if (isChanging) return;
 
-            isChanging = true; // 상태 변경 중임을 표시
+            isChanging = true;
 
             GroupBox dateBox = calenderArea.Controls[$"dateBox{target}"] as GroupBox;
 
@@ -373,26 +396,28 @@ namespace StickyCalender
 
         private int[] CheckDateColumn()
         {
-            List<int> matchingRows = new List<int>();  // 일치하는 행 번호를 저장할 리스트
+            /*
+             * 함수 내용 :
+             * 현재 시스템에 설정되어 있는 년/월과 일치하는 파일이 있는지를 찾는 함수.
+             * 설정시간과 동일한 시점의 파일이 있는 행의 번호를 리스트로 모아서 리턴함.
+             */
+            List<int> matchingRows = new List<int>();
 
-            string[,] result = data_loading();  // 데이터를 불러옴
-            int rowCount = result.GetLength(0); // 배열의 행의 수
+            string[,] result = data_loading();
+            int rowCount = result.GetLength(0);
 
-            // result 배열의 1열을 순회
             for (int i = 0; i < rowCount; i++)
             {
-                string dateStr = result[i, 0]; // 1열의 데이터 가져오기
+                string dateStr = result[i, 0];
 
-                // YYYYMMDD 형식인지 정규 표현식으로 확인
-                if (dateStr.Length == 8 && int.TryParse(dateStr, out _))  // 길이가 8이고, 숫자로만 구성되어 있는지 확인
+                if (dateStr.Length == 8 && int.TryParse(dateStr, out _))
                 {
-                    int dataYear = int.Parse(dateStr.Substring(0, 4)); // 년도 추출
-                    int dataMonth = int.Parse(dateStr.Substring(4, 2)); // 월 추출
+                    int dataYear = int.Parse(dateStr.Substring(0, 4));
+                    int dataMonth = int.Parse(dateStr.Substring(4, 2));
 
-                    // 년도와 월이 일치하는지 확인
                     if (dataYear == Syear && dataMonth == Smonth)
                     {
-                        matchingRows.Add(i);  // 일치하는 행 번호를 리스트에 추가
+                        matchingRows.Add(i);
                     }
                 }
                 else
@@ -405,24 +430,37 @@ namespace StickyCalender
             return matchingRows.ToArray();
         }
 
-        private void calenderReset(int year = -1, int month = -1, int day = -1) // 캘린더를 지정한 날짜의 모양으로 초기화 함 ( 미입력시 오늘 날짜로 설정함 )
+        private void calenderReset(int year = -1, int month = -1, int day = -1) // 캘린더를 지정한 날짜의 모양으로 초기화 함 ( 미입력시 오늘 날짜로 설정함 ㅡ )
         {
+            /*
+             * 함수 내용 ( 순차별 ) :
+             * 
+             * 1. 캘린더 날짜 표기 라벨 위치 조정
+             * 2. 각종 변수 초기화
+             * -> 미기입 or 오류값 입력 시, 현재 날짜를 기준으로 수정 ( ex : 2024년 08월 12일에 실행 했는데 월을 미기입 시, month 값이 08로 설정됨 )
+             * 3. 달력 미사용부 비활성화
+             * 4. 달력 사용부 활성화 및 라디오버튼에 날짜 값 기입
+             * 5. 달력 미사용부 비활성화
+             * 6. 날짜 표기 라벨 텍스트 값 새로 조정
+             * 7. 전역변수 Syear / Smonth / Sday 값 변경
+             * 8. 해당 월에 있는 메모들 데이터 칸에 입력.
+             */
+            Calender_Date.Location = new Point((Calender_DateArea.Width / 2 - Calender_Date.Width / 2), 17); // 캘린더 날짜 위치 조정
+
             string dayName = "Monday";
             int targetP;
-            DateTime date;
+
+            DateTime date = DateTime.Now;
             if (year > 2099 || year < 1990) year = -1;
             if (month > 12) month = -1;
             if (day > 31) day = -1;
 
-
-            if (year == -1 || month == -1 || day == -1)
-            {
-                date = DateTime.Now;
-            }
-            else
-            {
-                date = new DateTime(year, month, day);
-            }
+            if (year == -1)year = date.Year;
+            if (month == -1)month = date.Month;
+            if (day == -1)day = date.Day;
+            
+            date = new DateTime(year, month, day);
+           
 
             DayOfWeek dayOfWeek = date.DayOfWeek;
             year = date.Year;
@@ -488,8 +526,21 @@ namespace StickyCalender
                     StartP = -1;
                     break;
             }
+
+
             int lastDay = DateTime.DaysInMonth(year, month);
+
+            for (int i = 1; i <= 42; i++)
+            {
+                writeDateBox(2, i);
+            }
+
             int j = 1;
+
+            for (int i = 1; i <= StartP; i++)
+            {
+                writeDateBox(2, i);
+            }
 
             for (int i = StartP; i < lastDay + StartP; i++)
             {
@@ -497,27 +548,32 @@ namespace StickyCalender
                 j++;
             }
 
+            for(int i = lastDay+StartP; i<=42; i++)
+            {
+                writeDateBox(2, i);
+            }
+
 
             String newDate = year + "년 " + month + "월 " + day + "일";
             changeDateLabel(newDate);
 
-            Syear = year; Smonth = month;
+            Syear = year; Smonth = month; Sday = day;
 
             string[,] loadingData = data_loading();
             int[] match = CheckDateColumn();
 
             foreach (int index in match)
             {
-                string dateStr = loadingData[index, 0];  // 일치하는 날짜의 데이터 (YYYYMMDD 형식)
+                string dateStr = loadingData[index, 0];
 
-                // 각 날짜별로 데이터를 삽입 (예: dateStr이 '20231109'이라면, 해당 날짜에 맞는 데이터 삽입)
-                int target = int.Parse(dateStr.Substring(6, 2)); // 날짜에서 일 부분을 추출하여 target에 맞게 설정 (09일이면 target=9)
+                
+                int target = int.Parse(dateStr.Substring(6, 2));
 
-                // 데이터를 삽입 (예: 'data'는 해당 날짜에 대한 상세 정보)
-                string data = loadingData[index, 1];  // 예시로 2번째 열이 데이터라 가정
+                
+                string data = loadingData[index, 1];
 
-                // 데이터를 줄바꿈을 포함하여 해당 날짜의 ListBox에 추가
-                InsertDataIntoListBox(target, data);  // writeDateBox 대신 InsertDataIntoListBox 사용
+                
+                InsertDataIntoListBox(target+StartP-1, data);
             }
 
 
@@ -549,8 +605,7 @@ namespace StickyCalender
         private void mainForm_Load(object sender, EventArgs e)
         {
             memoLoad();
-            Calender_Date.Location = new Point((Calender_DateArea.Width / 2 - Calender_Date.Width / 2), 17); // 캘린더 날짜 위치 조정
-            calenderReset(2024, 11, 15);
+            calenderReset();
 
         }
 
@@ -561,12 +616,17 @@ namespace StickyCalender
 
         private void Add_Clicked(object sender, EventArgs e)
         {
-
+            // 기본 형태는 다음과 같음.
+            WriteFile("","");
+            add_memo add_Memo = new add_memo();
+            add_Memo.ShowDialog();
         }
 
         private void Setting_Clicked(object sender, EventArgs e)
         {
-
+            //기본 형태는 다음과 같음.
+            setting setting =  new setting();
+            setting.ShowDialog();
         }
 
         private void Delete_Clicked(object sender, EventArgs e)
@@ -601,6 +661,8 @@ namespace StickyCalender
 
             if (checkEmpty() == 0) deleteButton.Enabled = false;
             else deleteButton.Enabled = true;
+
+            calenderReset(Syear,Smonth,Sday);
         }
 
 
@@ -620,6 +682,43 @@ namespace StickyCalender
             if (checkEmpty() == 0) deleteButton.Enabled = false;
             else deleteButton.Enabled = true;
 
+        }
+
+        private void trashButton_Click(object sender, EventArgs e)
+        {
+            memo_trash memo_Trash = new memo_trash();
+            memo_Trash.ShowDialog();
+        }
+
+        private void MonthButtonClicked(object sender, EventArgs e)
+        {
+            Button B = sender as Button;
+            if (B != null)
+            {
+                if (B == DateLeftShift)
+                {
+                    if (Smonth == 1)
+                    {
+                        Syear--;
+                        Smonth = 12;
+                    }
+                    else Smonth--;
+                    
+                    
+                    calenderReset(Syear, Smonth, Sday); 
+                }
+                if (B == DateRightShift)
+                {
+                    if(Smonth == 12)
+                    {
+                        Syear++;
+                        Smonth = 1;
+                    }
+                    else Smonth++;
+                    calenderReset(Syear, Smonth, Sday);
+                }
+            }
+            
         }
 
         private void radioChecked(object sender, EventArgs e)
