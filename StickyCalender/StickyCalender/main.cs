@@ -11,6 +11,21 @@ using System.Windows.Forms;
 using System.Threading;
 
 
+/*for (int i = 1; i <= 42; i++)
+            {
+                // 각 ListBox의 이름을 동적으로 설정
+                string listBoxName = $"DateBox{i}";
+
+                // calenderArea GroupBox에서 해당 이름의 ListBox를 찾음
+                ListBox listBox = calenderArea.Controls.Find(listBoxName, true).FirstOrDefault() as ListBox;
+
+                if (listBox != null)
+                {
+                    // 원하는 작업 수행
+                    listBox.Items.Add("Some data");
+                }
+            }*/
+
 /*
 프로그램 작성 가이드라인
 
@@ -97,7 +112,7 @@ namespace StickyCalender
             }
         }
 
-        public void MoveFile(int fromto,string fileName)
+        public void MoveFile(int fromto, string fileName)
         {
             if (fromto == 1) // 휴지통으로 이동
             {
@@ -126,7 +141,7 @@ namespace StickyCalender
                     //MessageBox.Show($"파일 '{fileName}'을(를) 찾을 수 없습니다.");
                 }
             }
-            else if(fromto == 0) // 휴지통에서 복구
+            else if (fromto == 0) // 휴지통에서 복구
             {
                 string from = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\trash", fileName);
                 string to = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\data", fileName);
@@ -217,6 +232,23 @@ namespace StickyCalender
             return 0;
         }
 
+        private void writeDateBox(int target,String data)
+        {
+            string listBoxName = $"DateBox{target}";
+            ListBox listBox = calenderArea.Controls.Find(listBoxName, true).FirstOrDefault() as ListBox;
+
+            listBox.Items.Add(data);
+        }
+
+        private void calenderReset()
+        {
+            string formattedDate = DateTime.Today.ToString("yyyy년MM월dd일");
+            Calender_Date.Text = formattedDate;
+
+
+        }
+
+
 
         //----------------------------------< 폼  함 수 >----------------------------------
         public main()
@@ -227,6 +259,11 @@ namespace StickyCalender
         private void mainForm_Load(object sender, EventArgs e)
         {
             memoLoad();
+            Calender_Date.Location = new Point((Calender_DateArea.Width / 2 - Calender_Date.Width / 2), 17); // 캘린더 날짜 위치 조정
+            writeDateBox(1,"1번입력");
+            writeDateBox(1,"2번입력");
+            calenderReset();
+
         }
 
         private void Search_clicked(object sender, EventArgs e)
@@ -274,8 +311,8 @@ namespace StickyCalender
                 groupBox.Dispose();
             }
 
-            if (checkEmpty() == 0) deleteButton.Enabled=false;
-            else deleteButton.Enabled=true;
+            if (checkEmpty() == 0) deleteButton.Enabled = false;
+            else deleteButton.Enabled = true;
         }
 
 
@@ -289,11 +326,16 @@ namespace StickyCalender
                     groupBox.Dispose();
                 }
             }
-            
+
             memoLoad();
 
             if (checkEmpty() == 0) deleteButton.Enabled = false;
             else deleteButton.Enabled = true;
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }
