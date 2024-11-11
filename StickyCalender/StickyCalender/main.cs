@@ -41,7 +41,6 @@ namespace StickyCalender
         {
             string relativePath = @"..\..\data";
             string folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
-
             List<string[]> dataList = new List<string[]>();
 
             if (Directory.Exists(folderPath))
@@ -51,20 +50,32 @@ namespace StickyCalender
                 foreach (string filePath in files)
                 {
                     string fileName = Path.GetFileNameWithoutExtension(filePath);
-                    if (DateTime.TryParseExact(fileName, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out DateTime date))
+
+                    // 파일 이름을 "_" 기준으로 분리하여 날짜와 제목을 추출
+                    string[] parts = fileName.Split('_');
+                    if (parts.Length == 2 && DateTime.TryParseExact(parts[0], "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out DateTime date))
                     {
+                        string datePart = parts[0]; // 날짜 부분
+                        string titlePart = parts[1]; // 제목 부분
+
+                        // 파일 내용을 읽어와서 변수에 저장
                         string content = File.ReadAllText(filePath);
-                        dataList.Add(new string[] { fileName, content });
+
+                        // 날짜, 제목, 내용으로 구성된 배열을 리스트에 추가
+                        dataList.Add(new string[] { datePart, titlePart, content });
                     }
                 }
 
+                // 날짜(파일 이름)를 기준으로 리스트를 오름차순 정렬
                 dataList.Sort((x, y) => x[0].CompareTo(y[0]));
 
-                string[,] sortedData = new string[dataList.Count, 2];
+                // 정렬된 데이터를 2차원 배열로 변환
+                string[,] sortedData = new string[dataList.Count, 3];
                 for (int i = 0; i < dataList.Count; i++)
                 {
-                    sortedData[i, 0] = dataList[i][0];
-                    sortedData[i, 1] = dataList[i][1];
+                    sortedData[i, 0] = dataList[i][0]; // 날짜
+                    sortedData[i, 1] = dataList[i][1]; // 제목
+                    sortedData[i, 2] = dataList[i][2]; // 내용
                 }
 
                 return sortedData;
@@ -72,9 +83,10 @@ namespace StickyCalender
             else
             {
                 MessageBox.Show("데이터 폴더를 찾을 수 없습니다. 경로를 확인하세요.");
-                return new string[,] { { "error", "path" } };
+                return new string[,] { { "error", "path", "" } };
             }
         }
+
 
 
 
@@ -187,7 +199,7 @@ namespace StickyCalender
 
 
         //----------------------------------< 폼 응 용  함 수 >----------------------------------
-        private void memoPreview(string date, string detail = "비어있는 메모") //메모 추가
+        private void memoPreview(string title, string detail = "비어있는 메모") //메모 추가
         {
             GroupBox groupBox = new GroupBox();
             groupBox.Text = "";
@@ -195,7 +207,7 @@ namespace StickyCalender
             groupBox.Width = memoPanel.Width - 30;
 
             CheckBox checkBox = new CheckBox();
-            checkBox.Text = date;
+            checkBox.Text = title;
             checkBox.Location = new Point(10, 10);
             checkBox.Width = groupBox.Width - 20;
 
@@ -218,16 +230,35 @@ namespace StickyCalender
             memoPanel.Controls.Add(groupBox);
         }
 
-        private void memoLoad()//메모 불러오기 memoPreview를 이용하여 존재하는 파일 전부를 읽어드림.
+        private void memoLoad(int year = -1, int month = -1, int day = -1) // 특정 날짜에 해당하는 메모만 불러오기
         {
+            if (year == -1) year = Syear;
+            if (month == -1) month = Smonth;
+            if(day == -1) day = Sday;
+
+            // year, month, day를 YYYYMMDD 형식의 문자열로 변환
+            string targetDate = $"{year:D4}{month:D2}{day:D2}";
+
             string[,] result = data_loading();
             for (int i = 0; i < result.GetLength(0); i++)
             {
-                if (result[i, 0] == null) break;
-                memoPreview(result[i, 0], result[i, 1]);
+                // 해당 날짜와 일치하는 경우에만 메모 불러오기
+                if (result[i, 0] == targetDate)
+                {
+                    memoPreview(result[i, 1], result[i, 2]);
+                }
             }
 
+            // 불러온 메모가 없는 경우 삭제 버튼 비활성화
             if (checkEmpty() == 0) deleteButton.Enabled = false;
+        }
+
+        private void resetVar()
+        {
+            DateTime date = DateTime.Now;
+            Syear = date.Year;
+            Smonth = date.Month;
+            Sday = date.Day;
         }
 
         private int checkEmpty() // 메모 패널에 존재하는 메모가 있는지를 확인함.
@@ -392,6 +423,34 @@ namespace StickyCalender
             }
 
             isChanging = false; // 상태 변경이 끝났음을 표시
+        }
+
+        private int[] checkRadioButtonText()
+        {
+            int[] returnArr = new int[42];
+
+            for(int target = 1; target <= 42; target++)
+            {
+                GroupBox dateBox = calenderArea.Controls[$"dateBox{target}"] as GroupBox;
+
+                if (dateBox != null)
+                {
+                    RadioButton dateRadioButton = dateBox.Controls[$"dateButton{target}"] as RadioButton;
+
+                    if (dateRadioButton != null)
+                    {
+                        if (int.TryParse(dateRadioButton.Text, out int parsedValue))
+                        {
+                            returnArr[target-1] = parsedValue;
+                        }
+                        else
+                        {
+                            returnArr[target-1] = -1;
+                        }
+                    }
+                }
+            }
+            return returnArr;
         }
 
         private int[] CheckDateColumn()
@@ -604,8 +663,9 @@ namespace StickyCalender
 
         private void mainForm_Load(object sender, EventArgs e)
         {
-            memoLoad();
+            resetVar();
             calenderReset();
+            checkRadioButtonText();
 
         }
 
@@ -724,23 +784,37 @@ namespace StickyCalender
         private void radioChecked(object sender, EventArgs e)
         {
             RadioButton R = sender as RadioButton;
+            string radioButtonName;
+            int buttonNumber = 0;
+            int i;
 
             if (R != null)
             {
                 // "dateButton"을 제거하여 숫자만 남기고 정수로 변환
-                string radioButtonName = R.Name.Replace("dateButton", "");
-                int buttonNumber;
+                radioButtonName = R.Name.Replace("dateButton", "");
+                
                 if (int.TryParse(radioButtonName, out buttonNumber))
                 {
                     // 다른 모든 라디오 버튼을 끄는 코드
-                    for (int i = 1; i <= 42; i++)
+                    for (i = 1; i <= 42; i++)
                     {
-                        changeRadioChecked(i, false);
+                        if(buttonNumber!=i)changeRadioChecked(i, false);
                     }
-                    // 현재 라디오 버튼만 켬
-                    changeRadioChecked(buttonNumber, true);
+                    MessageBox.Show(Convert.ToString(i));
+                    
                 }
             }
+
+            int[] radioButtonValue = checkRadioButtonText();
+            Sday = radioButtonValue[buttonNumber];
+
+            if (Sday != -1)
+            {
+                MessageBox.Show("통과");   
+                memoLoad(Syear, Smonth, Sday);
+
+            }
+
         }
     }
 }

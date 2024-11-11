@@ -8,3 +8,14 @@ C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\obj\Debug\Stic
 C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\obj\Debug\StickyCalender.exe
 C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\obj\Debug\StickyCalender.pdb
 C:\Users\win\Desktop\StickyCalender\StickyCalender\StickyCalender\obj\Debug\StickyCalender.main.resources
+C:\Users\user\Desktop\C#\report\StickyCalender\StickyCalender\bin\Debug\StickyCalender.exe.config
+C:\Users\user\Desktop\C#\report\StickyCalender\StickyCalender\bin\Debug\StickyCalender.exe
+C:\Users\user\Desktop\C#\report\StickyCalender\StickyCalender\bin\Debug\StickyCalender.pdb
+C:\Users\user\Desktop\C#\report\StickyCalender\StickyCalender\obj\Debug\StickyCalender.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\C#\report\StickyCalender\StickyCalender\obj\Debug\StickyCalender.csproj.SuggestedBindingRedirects.cache
+C:\Users\user\Desktop\C#\report\StickyCalender\StickyCalender\obj\Debug\StickyCalender.main.resources
+C:\Users\user\Desktop\C#\report\StickyCalender\StickyCalender\obj\Debug\StickyCalender.Properties.Resources.resources
+C:\Users\user\Desktop\C#\report\StickyCalender\StickyCalender\obj\Debug\StickyCalender.csproj.GenerateResource.cache
+C:\Users\user\Desktop\C#\report\StickyCalender\StickyCalender\obj\Debug\StickyCalender.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\C#\report\StickyCalender\StickyCalender\obj\Debug\StickyCalender.exe
+C:\Users\user\Desktop\C#\report\StickyCalender\StickyCalender\obj\Debug\StickyCalender.pdb
