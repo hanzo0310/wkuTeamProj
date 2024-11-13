@@ -33,6 +33,7 @@ namespace StickyCalender
     {
 
         private bool isChanging = false;
+        private bool isRadioChanging = false;
         static int Syear, Smonth, Sday;
 
 
@@ -232,6 +233,8 @@ namespace StickyCalender
 
         private void memoLoad(int year = -1, int month = -1, int day = -1) // 특정 날짜에 해당하는 메모만 불러오기
         {
+            int cnt = 1;
+
             if (year == -1) year = Syear;
             if (month == -1) month = Smonth;
             if(day == -1) day = Sday;
@@ -245,7 +248,8 @@ namespace StickyCalender
                 // 해당 날짜와 일치하는 경우에만 메모 불러오기
                 if (result[i, 0] == targetDate)
                 {
-                    memoPreview(result[i, 1], result[i, 2]);
+                    memoPreview($"{cnt}번째 메모", result[i, 1]);
+                    cnt++;
                 }
             }
 
@@ -441,7 +445,7 @@ namespace StickyCalender
                     {
                         if (int.TryParse(dateRadioButton.Text, out int parsedValue))
                         {
-                            returnArr[target-1] = parsedValue;
+                            returnArr[target-1] = parsedValue-1;
                         }
                         else
                         {
@@ -653,6 +657,23 @@ namespace StickyCalender
             }
         }
 
+        private void refreshActive()
+        {
+            foreach (Control control in memoPanel.Controls.Cast<Control>().ToList())
+            {
+                if (control is GroupBox groupBox)
+                {
+                    memoPanel.Controls.Remove(groupBox);
+                    groupBox.Dispose();
+                }
+            }
+
+            memoLoad();
+
+            if (checkEmpty() == 0) deleteButton.Enabled = false;
+            else deleteButton.Enabled = true;
+        }
+
 
 
         //----------------------------------< 폼  함 수 >----------------------------------
@@ -666,6 +687,7 @@ namespace StickyCalender
             resetVar();
             calenderReset();
             checkRadioButtonText();
+            memoLoad(Syear, Smonth,Smonth);
 
         }
 
@@ -728,26 +750,24 @@ namespace StickyCalender
 
         private void refresh_Click(object sender, EventArgs e)
         {
-            foreach (Control control in memoPanel.Controls.Cast<Control>().ToList())
-            {
-                if (control is GroupBox groupBox)
-                {
-                    memoPanel.Controls.Remove(groupBox);
-                    groupBox.Dispose();
-                }
-            }
-
-            memoLoad();
-
-            if (checkEmpty() == 0) deleteButton.Enabled = false;
-            else deleteButton.Enabled = true;
-
+            refreshActive();
         }
 
         private void trashButton_Click(object sender, EventArgs e)
         {
             memo_trash memo_Trash = new memo_trash();
             memo_Trash.ShowDialog();
+        }
+
+        private void ListDoubleClicked(object sender, EventArgs e)
+        {
+            MessageBox.Show("통과");
+        }
+
+        private void ListClick(object sender, EventArgs e)
+        {
+            ListBox LB = sender as ListBox;
+            LB.ClearSelected();
         }
 
         private void MonthButtonClicked(object sender, EventArgs e)
@@ -783,38 +803,37 @@ namespace StickyCalender
 
         private void radioChecked(object sender, EventArgs e)
         {
+            if (isRadioChanging) return; // 재귀 호출 방지
+            isRadioChanging = true; // 플래그 설정
+
             RadioButton R = sender as RadioButton;
             string radioButtonName;
             int buttonNumber = 0;
-            int i;
 
             if (R != null)
             {
                 // "dateButton"을 제거하여 숫자만 남기고 정수로 변환
                 radioButtonName = R.Name.Replace("dateButton", "");
-                
+
                 if (int.TryParse(radioButtonName, out buttonNumber))
                 {
                     // 다른 모든 라디오 버튼을 끄는 코드
-                    for (i = 1; i <= 42; i++)
+                    for (int i = 1; i <= 42; i++)
                     {
-                        if(buttonNumber!=i)changeRadioChecked(i, false);
-                    }
-                    MessageBox.Show(Convert.ToString(i));
-                    
+                        if (buttonNumber != i)
+                        {
+                            changeRadioChecked(i, false); // changeRadioChecked에서는 기존의 isChanging 플래그를 사용
+                        }
+                    }                    
                 }
             }
 
             int[] radioButtonValue = checkRadioButtonText();
             Sday = radioButtonValue[buttonNumber];
 
-            if (Sday != -1)
-            {
-                MessageBox.Show("통과");   
-                memoLoad(Syear, Smonth, Sday);
+            refreshActive(); // 추가 작업 호출
 
-            }
-
+            isRadioChanging = false; // 플래그 해제
         }
     }
 }

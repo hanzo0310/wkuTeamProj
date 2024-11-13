@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|c:\\users\\win\\desktop\\stickycalender\\stickycalender\\stickycalender\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|solutionrelative:stickycalender\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\stickycalender\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|c:\\users\\win\\desktop\\stickycalender\\stickycalender\\stickycalender\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|solutionrelative:stickycalender\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|c:\\users\\win\\desktop\\stickycalender\\stickycalender\\stickycalender\\memo_trash.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|solutionrelative:stickycalender\\memo_trash.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\stickycalender\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|solutionrelative:stickycalender\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\stickycalender\\add_memo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|solutionrelative:stickycalender\\add_memo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\stickycalender\\memo_trash.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|solutionrelative:stickycalender\\memo_trash.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\stickycalender\\setting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|solutionrelative:stickycalender\\setting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\stickycalender\\add_memo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{CE385D10-B7DC-4B87-BFB6-01C046BF8423}|StickyCalender\\StickyCalender.csproj|solutionrelative:stickycalender\\add_memo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
@@ -46,52 +46,50 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "main.cs",
               "DocumentMoniker": "C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\StickyCalender\\main.cs",
               "RelativeDocumentMoniker": "StickyCalender\\main.cs",
-              "ToolTip": "C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\StickyCalender\\main.cs*",
-              "RelativeToolTip": "StickyCalender\\main.cs*",
-              "ViewState": "AgIAALEBAAAAAAAAAAAuwMkBAAApAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\StickyCalender\\main.cs",
+              "RelativeToolTip": "StickyCalender\\main.cs",
+              "ViewState": "AgIAANoCAAAAAAAAAAAowPsCAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-07T16:25:15.547Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "main.cs [\uB514\uC790\uC778]",
               "DocumentMoniker": "C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\StickyCalender\\main.cs",
               "RelativeDocumentMoniker": "StickyCalender\\main.cs",
-              "ToolTip": "C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\StickyCalender\\main.cs [\uB514\uC790\uC778]*",
-              "RelativeToolTip": "StickyCalender\\main.cs [\uB514\uC790\uC778]*",
+              "ToolTip": "C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\StickyCalender\\main.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "StickyCalender\\main.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-07T15:24:15.451Z",
               "EditorCaption": " [\uB514\uC790\uC778]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "setting.cs [\uB514\uC790\uC778]",
               "DocumentMoniker": "C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\StickyCalender\\setting.cs",
               "RelativeDocumentMoniker": "StickyCalender\\setting.cs",
               "ToolTip": "C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\StickyCalender\\setting.cs [\uB514\uC790\uC778]",
               "RelativeToolTip": "StickyCalender\\setting.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T19:48:18.336Z",
-              "EditorCaption": " [\uB514\uC790\uC778]"
+              "WhenOpened": "2024-11-07T19:48:18.336Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "add_memo.cs [\uB514\uC790\uC778]",
               "DocumentMoniker": "C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\StickyCalender\\add_memo.cs",
               "RelativeDocumentMoniker": "StickyCalender\\add_memo.cs",
               "ToolTip": "C:\\Users\\win\\Desktop\\StickyCalender\\StickyCalender\\StickyCalender\\add_memo.cs [\uB514\uC790\uC778]",
               "RelativeToolTip": "StickyCalender\\add_memo.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T17:02:34.321Z",
-              "EditorCaption": " [\uB514\uC790\uC778]"
+              "WhenOpened": "2024-11-07T17:02:34.321Z"
             }
           ]
         }
