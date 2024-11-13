@@ -721,7 +721,7 @@ namespace StickyCalender
         // 리스트박스가 더블 클릭되었을 때 실행되는 이벤트 핸들러 (현재 메시지 박스만 표시)
         private void ListDoubleClicked(object sender, EventArgs e)
         {
-            MessageBox.Show("통과");
+            
         }
 
         // 리스트박스가 클릭되었을 때 실행되는 이벤트 핸들러
